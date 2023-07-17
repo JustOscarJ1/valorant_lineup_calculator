@@ -79,5 +79,6 @@ For any inquiries or feedback, please contact JustOscarJs:
 - Discord: JustOscarJ
 - GitHub: JustOscarJ1
 - Reddit: FlamingJark
+- BuyMeACoffee (dono): buymeacoffee.com/flamingjark
 
 Feel free to reach out with any questions or suggestions related to the project.
