@@ -366,7 +366,8 @@ class SettingsGUI:
             "Deadlock Net": "deadlock_net.png",
             "Killjoy Swarm Grenade": "killjoy_swarm_grenade.png",
             "Cypher Cage": "cypher_cage.png",
-            "Gecko Moshpit": "gecko_moshpit.png"
+            "Gecko Moshpit": "gecko_moshpit.png",
+            "Kayo Fragment": "kayo_fragment.png"
         }
 
         self.root = tk.Tk()

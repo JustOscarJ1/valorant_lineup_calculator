@@ -13,7 +13,7 @@ def play_instruction_noise(beep_or_tts, text = None):
         text (str): The text to be converted to speech.
         beep_or_tts: If the function should play a beep or TTS. Accepts "beep"/"tts"
     """
-    if beep_or_tts == 'tts':
+    if beep_or_tts.strip() == 'tts':
         engine = pyttsx3.init()
         engine.setProperty('rate', 350)  # You can adjust the speech rate (default is 200)
         engine.say(text)
@@ -199,7 +199,6 @@ def shoot_projectile(settings):
         if previous_x == pyautogui.position().x:
             iterations_since_movement += 1
         else:
-            print(previous_x, pyautogui.position().x)
             iterations_since_movement = 0
         previous_x = pyautogui.position().x
         if iterations_since_movement == settings.minimum_inactive_time_for_mouse_on_top * 10:
@@ -212,16 +211,17 @@ def shoot_projectile(settings):
     play_instruction_noise(settings.beep_or_tts,"Shoot the utility")
 
 VIPER_BRIMSTONE_STAGE_PARABOLA = Parabola({15: [77], 69: [0.000245, 556800, 550], 78: [0.0002, 749850, 700]})
-KILLJOY_VIPER_DEADLOCK_GECKO_PARABOLA = Parabola({9: [77], 39: [0.00014, 567320, 475], 44: [0.00012, 718950, 625]})
+KILLJOY_VIPER_DEADLOCK_GECKO_KAYO_PARABOLA = Parabola({9: [77], 39: [0.00014, 567320, 475], 44: [0.00012, 718950, 625]})
 CYPHER_PARABOLA = Parabola({5: [77], 24: [0.000068, 694550, 575]})
 
 cypher_cage = Ability(CYPHER_PARABOLA, "cypher_cage")
-deadlock_net = Ability(KILLJOY_VIPER_DEADLOCK_GECKO_PARABOLA, "deadlock_net")
-killjoy_swarm_grenade = Ability(KILLJOY_VIPER_DEADLOCK_GECKO_PARABOLA, "killjoy_swarm_grenade")
-gecko_moshpit = Ability(KILLJOY_VIPER_DEADLOCK_GECKO_PARABOLA, "gecko_moshpit")
-viper_poison_orb = Ability(KILLJOY_VIPER_DEADLOCK_GECKO_PARABOLA, "viper_poison_orb")
+deadlock_net = Ability(KILLJOY_VIPER_DEADLOCK_GECKO_KAYO_PARABOLA, "deadlock_net")
+killjoy_swarm_grenade = Ability(KILLJOY_VIPER_DEADLOCK_GECKO_KAYO_PARABOLA, "killjoy_swarm_grenade")
+gecko_moshpit = Ability(KILLJOY_VIPER_DEADLOCK_GECKO_KAYO_PARABOLA, "gecko_moshpit")
+viper_poison_orb = Ability(KILLJOY_VIPER_DEADLOCK_GECKO_KAYO_PARABOLA, "viper_poison_orb")
+kayo_fragment = Ability(KILLJOY_VIPER_DEADLOCK_GECKO_KAYO_PARABOLA, "kayo_fragment")
 viper_snakebite = Ability(VIPER_BRIMSTONE_STAGE_PARABOLA, "viper_snakebite")
 brimstone_molotov = Ability(VIPER_BRIMSTONE_STAGE_PARABOLA, "brimstone_molotov")
 sage_slow_orb = Ability(VIPER_BRIMSTONE_STAGE_PARABOLA, "sage_slow")
 
-abilities = [cypher_cage, deadlock_net, killjoy_swarm_grenade, gecko_moshpit, viper_snakebite, viper_poison_orb, brimstone_molotov, sage_slow_orb]
+abilities = [cypher_cage, deadlock_net, killjoy_swarm_grenade, gecko_moshpit, viper_snakebite, viper_poison_orb, brimstone_molotov, sage_slow_orb, kayo_fragment]

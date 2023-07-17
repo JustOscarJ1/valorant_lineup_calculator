@@ -1,4 +1,4 @@
-ability: (viper_snakebite, viper_poisonorb, brimstone_molotov, sage_slow, deadlock_net, killjoy_molotov, cypher_smoke, gecko_moshpit)
+ability: (viper_snakebite, viper_poisonorb, brimstone_molotov, sage_slow, deadlock_net, killjoy_molotov, cypher_smoke, gecko_moshpit, kayo_fragment)
 sage_slow
 valorant_sens:
 1.0
