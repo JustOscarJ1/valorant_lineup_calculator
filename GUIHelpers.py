@@ -4,7 +4,7 @@ import keyboard
 import pyautogui
 import customtkinter
 from PIL import ImageTk, Image
-from logic_helpers import create_main_menu, shoot_projectile, convert_text_to_speech
+from logic_helpers import create_main_menu, shoot_projectile, play_instruction_noise
 
 # DistanceInputGUI class for inputting distance
 class DistanceInputGUI:
@@ -89,6 +89,8 @@ class SettingsViewer:
         self.inactive_time_placeholder = None
         self.ping_time_label = None
         self.ping_time_placeholder = None
+        self.beep_or_tts_label = None
+        self.beep_or_tts_placeholder = None
         self.close_button = None
 
     def close_window(self):
@@ -108,7 +110,7 @@ class SettingsViewer:
 
         # Create the main window and frame
         self.root = customtkinter.CTk()
-        self.root.geometry("425x275")
+        self.root.geometry("425x325")
         self.root.title("Settings Viewer")
         self.root.overrideredirect(True)
 
@@ -142,6 +144,12 @@ class SettingsViewer:
 
         self.ping_time_placeholder = customtkinter.CTkLabel(self.frame, text=str(self.settings_manager.allowed_time_to_move_mouse_to_ping))
         self.ping_time_placeholder.grid(row=3, column=1, padx=10, pady=10)
+
+        self.ping_time_label = customtkinter.CTkLabel(self.frame, text="Beep or TTS:")
+        self.ping_time_label.grid(row=4, column=0, padx=10, pady=10)
+
+        self.beep_or_tts_placeholder = customtkinter.CTkLabel(self.frame, text=str(self.settings_manager.beep_or_tts))
+        self.beep_or_tts_placeholder.grid(row=4, column=1, padx=10, pady=10)
 
         # Create the close button
         self.close_button = customtkinter.CTkButton(self.root, text="Close", command=self.close_window)
@@ -235,14 +243,14 @@ def get_distance():
 
     # Check if the user clicked cancel
     if not input_value:
-        convert_text_to_speech("Cancelled")
+        play_instruction_noise("Cancelled")
         return "cancelled"
 
     # Check if the input is a number, if not, get a new input
     try:
         float(input_value)
     except ValueError:
-        convert_text_to_speech("Invalid input, input again.")
+        play_instruction_noise("Invalid input, input again.")
         return False
 
     return float(input_value)
@@ -344,6 +352,7 @@ class MainMenu:
 
 
 # SettingsGUI class for setting new values
+
 class SettingsGUI:
     def __init__(self):
         """
@@ -365,11 +374,13 @@ class SettingsGUI:
         self.root.overrideredirect(True)
         self.root.resizable(False, False)
         self.selected_ability = tk.StringVar()
+        self.beep_or_tts = tk.StringVar(value="beep")
         self.create_buttons()
         self.create_separator()
         self.create_sensitivity_input()
         self.create_inactive_time_slider()
         self.create_ping_time_slider()
+        self.create_beep_tts_buttons()
         self.create_save_button()
 
     def create_buttons(self):
@@ -447,12 +458,28 @@ class SettingsGUI:
         self.scale_ping_time = tk.Scale(self.root, from_=1, to=10, orient="horizontal", resolution=0.1)
         self.scale_ping_time.grid(row=len(self.button_frames) + 6, column=0, padx=5, pady=5, sticky="w")
 
+    def create_beep_tts_buttons(self):
+        """
+        Create buttons for selecting Beep or TTS.
+        """
+        label_beep_tts = tk.Label(self.root, text="Beep or TTS")
+        label_beep_tts.grid(row=len(self.button_frames) + 7, column=0, padx=5, pady=5, sticky="w")
+
+        button_frame = tk.Frame(self.root)
+        button_frame.grid(row=len(self.button_frames) + 8, column=0, sticky="w", pady=5)
+
+        button_beep = tk.Radiobutton(button_frame, text="Beep", variable=self.beep_or_tts, value="beep")
+        button_beep.grid(row=0, column=0, padx=5)
+
+        button_tts = tk.Radiobutton(button_frame, text="TTS", variable=self.beep_or_tts, value="tts")
+        button_tts.grid(row=0, column=1, padx=5)
+
     def create_save_button(self):
         """
         Create a save button to save the settings.
         """
         self.save_button = tk.Button(self.root, text="Save", command=self.save_values, state="disabled")
-        self.save_button.grid(row=len(self.button_frames) + 7, column=0, pady=10)
+        self.save_button.grid(row=len(self.button_frames) + 9, column=0, pady=10)
 
     def image_click(self, button_name):
         """
@@ -480,19 +507,24 @@ class SettingsGUI:
         min_inactive_time = self.scale_inactive_time.get()
         allowed_ping_time = self.scale_ping_time.get()
         selected_ability_str = self.selected_ability.get()
+        beep_or_tts_str = self.beep_or_tts.get()
 
         if not val_sensitivity:
             val_sensitivity = '1'
 
         with open('settings.txt', 'w') as f:
-            to_write = ['ability: (viper_snakebite, viper_poisonorb, brimstone_molotov, sage_slow, deadlock_net, killjoy_molotov, cypher_smoke, gecko_moshpit)',
-                          self.button_images[selected_ability_str][:-4],
-                          'valorant_sens:',
-                          val_sensitivity,
-                          'minimum inactive time for mouse to be on top (1-10)',
-                          str(min_inactive_time),
-                          'allowed time to move mouse to ping (1-10)',
-                          str(allowed_ping_time)]
+            to_write = [
+                'ability: (viper_snakebite, viper_poisonorb, brimstone_molotov, sage_slow, deadlock_net, killjoy_molotov, cypher_smoke, gecko_moshpit)',
+                self.button_images[selected_ability_str][:-4],
+                'valorant_sens:',
+                val_sensitivity,
+                'minimum inactive time for mouse to be on top (1-10)',
+                str(min_inactive_time),
+                'allowed time to move mouse to ping (1-10)',
+                str(allowed_ping_time),
+                'beep or tts (1 or 2)',
+                beep_or_tts_str
+            ]
 
             for text_to_write in to_write:
                 f.write(text_to_write + '\n')
@@ -501,13 +533,9 @@ class SettingsGUI:
         # print("Minimum inactive time for mouse to be on top:", min_inactive_time)
         # print("Allowed time to move mouse to ping:", allowed_ping_time)
         # print("Selected Ability:", selected_ability_str)
+        # print("Beep or TTS:", beep_or_tts_str)
         self.root.destroy()
         create_main_menu()
 
     def start(self):
-        """
-        Start the settings GUI.
-        """
         self.root.mainloop()
-
-

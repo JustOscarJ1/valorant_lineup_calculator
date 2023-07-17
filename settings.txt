@@ -6,3 +6,5 @@ minimum inactive time for mouse to be on top (1-10)
 1.0
 allowed time to move mouse to ping (1-10)
 1.0
+beep or tts 
+tts

@@ -3,18 +3,25 @@ import time
 import pyttsx3
 import GUIHelpers as guihelpers
 import pyautogui
+import winsound
 
-def convert_text_to_speech(text):
+def play_instruction_noise(beep_or_tts, text = None):
     """
-    Function to convert text to speech using pyttsx3 library.
+    Function to convert text to speech using pyttsx3 library or play a beep.
 
     Args:
         text (str): The text to be converted to speech.
+        beep_or_tts: If the function should play a beep or TTS. Accepts "beep"/"tts"
     """
-    engine = pyttsx3.init()
-    engine.setProperty('rate', 350)  # You can adjust the speech rate (default is 200)
-    engine.say(text)
-    engine.runAndWait()
+    if beep_or_tts == 'tts':
+        engine = pyttsx3.init()
+        engine.setProperty('rate', 350)  # You can adjust the speech rate (default is 200)
+        engine.say(text)
+        engine.runAndWait()
+    else:
+        frequency = 400
+        duration = 350
+        winsound.Beep(frequency, duration)
 
 def create_main_menu():
     """
@@ -58,6 +65,7 @@ class Parabola:
         self.max_angle = 0
         self.max_distance = 0
 
+
     def update_variables(self, distance):
         """
         Method to update the parabolic trajectory variables based on the desired distance.
@@ -97,7 +105,7 @@ class Parabola:
         """
         self.update_variables(distance)
         if distance > self.max_distance:
-            convert_text_to_speech(f"Maximum distance is {self.max_distance}")
+            play_instruction_noise('tts', f"Maximum distance is {self.max_distance}")
             exit()
 
         if self.m == self.k:
@@ -138,6 +146,7 @@ class SettingsManager:
         self.hero_ability = None
         self.allowed_time_to_move_mouse_to_ping = None
         self.minimum_inactive_time_for_mouse_on_top = None
+        self.beep_or_tts = None
         self.updates_values_from_file(file_name)
         self.sens_adjustment = self.valorant_sens / 0.623
 
@@ -157,6 +166,7 @@ class SettingsManager:
                 self.hero_ability = ability
                 break
 
+        self.beep_or_tts = settings[9]
         self.allowed_time_to_move_mouse_to_ping = float(settings[7])
         self.minimum_inactive_time_for_mouse_on_top = float(settings[5])
 
@@ -175,14 +185,14 @@ def shoot_projectile(settings):
     if desired_distance == 'cancelled':
         return
 
-    angle = settings.hero_ability.parabola.calculate_angle(desired_distance, settings)
+    angle = round(settings.hero_ability.parabola.calculate_angle(desired_distance, settings))
 
-    convert_text_to_speech(f"{desired_distance}")
-    convert_text_to_speech("Move mouse to ping.")
+    play_instruction_noise('tts', f"{desired_distance}")
+    play_instruction_noise(settings.beep_or_tts,"Move mouse to ping.")
     time.sleep(settings.allowed_time_to_move_mouse_to_ping)
 
     ping_x = pyautogui.position()[0]
-    convert_text_to_speech("Coordinates locked, move mouse to top of screen.")
+    play_instruction_noise(settings.beep_or_tts,"Coordinates locked, move mouse to top of screen.")
     previous_x = pyautogui.position().x
     iterations_since_movement = 0
     while True:
@@ -196,10 +206,10 @@ def shoot_projectile(settings):
             break
         time.sleep(0.1)
 
-    convert_text_to_speech("Top of screen detected, move mouse to optimal position.")
+    play_instruction_noise(settings.beep_or_tts,"Top of screen detected, move mouse to optimal position.")
     number_window = guihelpers.CoordinateWindow(ping_x, angle)
     number_window.root.mainloop()
-    convert_text_to_speech("Shoot the utility")
+    play_instruction_noise(settings.beep_or_tts,"Shoot the utility")
 
 VIPER_BRIMSTONE_STAGE_PARABOLA = Parabola({15: [77], 69: [0.000245, 556800, 550], 78: [0.0002, 749850, 700]})
 KILLJOY_VIPER_DEADLOCK_GECKO_PARABOLA = Parabola({9: [77], 39: [0.00014, 567320, 475], 44: [0.00012, 718950, 625]})
