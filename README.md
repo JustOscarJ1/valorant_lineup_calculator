@@ -61,6 +61,18 @@ For the calculations to work properly, you need to input your Valorant sensitivi
 The program has to detect when the mouse is on the top of the screen. It does this by checking how long the mouse has been inactive (not moving) for. You can change how much inactivity it waits for before it assumes the mouse is on the top of the screen.
 #### Allowed time to move mouse to ping
 When the program tells you to move the mouse to the ping, it starts a countdown. Once that countdown is complete it assumes you're looking at the ping. This setting is the length of that cooldown.
+#### Beep or TTS
+The program will instruct you on what to do in the shooting process with a TTS voice, if this is too distracting or takes too long for your liking, you can change the TTS to beeps with this setting.
+
+## Is this bannable?
+
+This program is **not** bannable. According to the [Riot TOS](https://www.riotgames.com/en/terms-of-service):
+
+> The following are examples of behaviour that warrant disciplinary measures:
+> 
+> Using any unauthorized third party programs, including mods, hacks, cheats, scripts, bots, trainers and automation programs that interact with the Riot Services in any way, for any purpose, including any unauthorized third party programs that intercept, emulate, or redirect any communication relating to the Riot Services and any unauthorized third party programs that collect info about the Riot Services by reading areas of memory used by the Riot Services to store info;
+
+This program does not intercept, emulate or redirect any communication to any Riot services. It does not read any memory or collect any information used by Riot services. Whilst this does give an in-game advantage, the way it is made makes it not bananble according to Riots TOS. There are other very popular applications which may not be as direct in their methods, but have the same end-goal, like Valorant Tracker.
 
 ## Contributing
 
