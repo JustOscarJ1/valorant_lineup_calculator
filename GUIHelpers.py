@@ -364,8 +364,8 @@ class SettingsGUI:
             "Brimstone Molotov": "brimstone_molotov.png",
             "Sage Slow": "sage_slow.png",
             "Deadlock Net": "deadlock_net.png",
-            "Killjoy Molotov": "killjoy_molotov.png",
-            "Cypher Smoke": "cypher_smoke.png",
+            "Killjoy Swarm Grenade": "killjoy_swarm_grenade.png",
+            "Cypher Cage": "cypher_cage.png",
             "Gecko Moshpit": "gecko_moshpit.png"
         }
 
@@ -514,7 +514,7 @@ class SettingsGUI:
 
         with open('settings.txt', 'w') as f:
             to_write = [
-                'ability: (viper_snakebite, viper_poisonorb, brimstone_molotov, sage_slow, deadlock_net, killjoy_molotov, cypher_smoke, gecko_moshpit)',
+                'ability: (viper_snakebite, viper_poisonorb, brimstone_molotov, sage_slow, deadlock_net, killjoy_swarm_grenade, cypher_cage, gecko_moshpit)',
                 self.button_images[selected_ability_str][:-4],
                 'valorant_sens:',
                 val_sensitivity,

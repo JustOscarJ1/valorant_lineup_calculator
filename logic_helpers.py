@@ -215,9 +215,9 @@ VIPER_BRIMSTONE_STAGE_PARABOLA = Parabola({15: [77], 69: [0.000245, 556800, 550]
 KILLJOY_VIPER_DEADLOCK_GECKO_PARABOLA = Parabola({9: [77], 39: [0.00014, 567320, 475], 44: [0.00012, 718950, 625]})
 CYPHER_PARABOLA = Parabola({5: [77], 24: [0.000068, 694550, 575]})
 
-cypher_cage = Ability(CYPHER_PARABOLA, "cypher_smoke")
+cypher_cage = Ability(CYPHER_PARABOLA, "cypher_cage")
 deadlock_net = Ability(KILLJOY_VIPER_DEADLOCK_GECKO_PARABOLA, "deadlock_net")
-killjoy_swarm_grenade = Ability(KILLJOY_VIPER_DEADLOCK_GECKO_PARABOLA, "killjoy_molotov")
+killjoy_swarm_grenade = Ability(KILLJOY_VIPER_DEADLOCK_GECKO_PARABOLA, "killjoy_swarm_grenade")
 gecko_moshpit = Ability(KILLJOY_VIPER_DEADLOCK_GECKO_PARABOLA, "gecko_moshpit")
 viper_poison_orb = Ability(KILLJOY_VIPER_DEADLOCK_GECKO_PARABOLA, "viper_poison_orb")
 viper_snakebite = Ability(VIPER_BRIMSTONE_STAGE_PARABOLA, "viper_snakebite")
