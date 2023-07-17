@@ -1,5 +1,7 @@
 <a href="https://www.buymeacoffee.com/flamingjark" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
+**Support and updates Discord: https://discord.gg/83WdsEnXac**
+
 WARNING: This will (probably) only work on 1920x1080 monitors, if someone with a larger monitor tests, this can probably be fixed pretty easily.
 # Valorant Lineup Tool
 
@@ -91,6 +93,7 @@ All programming was done by me, thanks to feedback on Reddit and Intelligenti Pa
 For any inquiries or feedback, please contact JustOscarJs:
 
 - Discord: JustOscarJ
+- Support Discord Server: https://discord.gg/83WdsEnXac
 - GitHub: JustOscarJ1
 - Reddit: FlamingJark
 
