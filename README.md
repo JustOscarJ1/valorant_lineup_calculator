@@ -26,7 +26,7 @@ Valorant Lineup Tool is a Python-based application that assists players in shoot
 - Libraries: `keyboard`, `pyautogui`, `pyttsx3`, `tkinter`, `customtkinter`, `PIL`
 
 ### Installation
-1. Download Python
+1. Download Python **with pip and add to path**, search a tutorial if you don't know how
 2. Download the files and keep them in one folder together, keep images in a folder named "images"
 3. Open command prompt, type `cd your_folder`
 4. In the command prompt type `pip install -r requirements.txt` to download the required packages
