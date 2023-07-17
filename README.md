@@ -61,6 +61,8 @@ For the calculations to work properly, you need to input your Valorant sensitivi
 The program has to detect when the mouse is on the top of the screen. It does this by checking how long the mouse has been inactive (not moving) for. You can change how much inactivity it waits for before it assumes the mouse is on the top of the screen.
 #### Allowed time to move mouse to ping
 When the program tells you to move the mouse to the ping, it starts a countdown. Once that countdown is complete it assumes you're looking at the ping. This setting is the length of that cooldown.
+#### Beep or TTS
+The program will instruct you on what to do in the shooting process with a TTS voice, if this is too distracting or takes too long for your liking, you can change the TTS to beeps with this setting.
 
 ## Contributing
 
