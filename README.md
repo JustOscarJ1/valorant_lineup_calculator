@@ -1,3 +1,4 @@
+WARNING: This will (probably) only work on 1920x1080 monitors, if someone with a larger monitor tests, this can probably be fixed pretty easily.
 # Valorant Lineup Tool
 
 Valorant Lineup Tool is a Python-based application that assists players in shooting projectiles with parabolic trajectories in the game Valorant. The tool provides a user-friendly interface for inputting desired distances, calculates the optimal angles for shooting projectiles, and guides players in positioning their mouse accurately for precise shots.
