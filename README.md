@@ -1,3 +1,5 @@
+<a href="https://www.buymeacoffee.com/flamingjark" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
 WARNING: This will (probably) only work on 1920x1080 monitors, if someone with a larger monitor tests, this can probably be fixed pretty easily.
 # Valorant Lineup Tool
 
