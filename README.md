@@ -40,7 +40,16 @@ Valorant Lineup Tool is a Python-based application that assists players in shoot
 
 ### Settings
 
-The tool allows users to customize sensitivity, minimum inactive time for the mouse to be on top, and the allowed time to move the mouse to ping. These settings can be modified through the "Set Settings" option in the main menu.
+To change settings press the "set settings" button in the main menu, then select the desired settings and press "save". These will be saved for future launches in `settings.txt`.
+
+####Ability
+You can change the ability you want the program to calculate for, to do this press the image of the desired ability in the settings menu. The text will appear bold to show the selection.
+#### Valorant sensitivity
+For the calculations to work properly, you need to input your Valorant sensitivity, do not enter DPI, EDPI or anything else, just the in-game sensitivity.
+#### Minimum inactive time for mouse to be on top
+The program has to detect when the mouse is on the top of the screen. It does this by checking how long the mouse has been inactive (not moving) for. You can change how much inactivity it waits for before it assumes the mouse is on the top of the screen.
+#### Allowed time to move mouse to ping
+When the program tells you to move the mouse to the ping, it starts a countdown. Once that countdown is complete it assumes you're looking at the ping. This setting is the length of that cooldown.
 
 ## Contributing
 
@@ -58,8 +67,8 @@ All programming was done by me, thanks to feedback on Reddit and Intelligenti Pa
 
 For any inquiries or feedback, please contact JustOscarJs:
 
-- Discord: JustOscarJ1
-- GitHub: JustOscarJ
+- Discord: JustOscarJ
+- GitHub: JustOscarJ1
 - Reddit: FlamingJark
 
 Feel free to reach out with any questions or suggestions related to the project.
