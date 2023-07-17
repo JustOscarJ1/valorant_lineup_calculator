@@ -236,7 +236,7 @@ def get_distance():
     # Check if the user clicked cancel
     if not input_value:
         convert_text_to_speech("Cancelled")
-        return False
+        return "cancelled"
 
     # Check if the input is a number, if not, get a new input
     try:
@@ -287,6 +287,7 @@ class MainMenu:
         credits_text = "Credits:\nDiscord: JustOscarJ\nGitHub: JustOscarJ1\nReddit: FlamingJark"
         self.credits_label = customtkinter.CTkLabel(master=self.root, text=credits_text, corner_radius=4)
         self.credits_label.place(relx=0.5, rely=0.85, anchor=customtkinter.CENTER)
+        self.hot_key_active = True
 
         keyboard.on_press_key("F5", self.on_hotkey_pressed)
 
@@ -298,9 +299,10 @@ class MainMenu:
             event (keyboard.KeyboardEvent): The keyboard event object.
         """
         # Check if the hotkey pressed is the "F5" key
-        if event.name == "f5":
+        if event.name == "f5" and self.hot_key_active:
             # Call the shoot_projectile method
             self.send_projectile()
+        self.hot_key_active = not self.hot_key_active
 
     # Button click event handlers
     def current_settings(self):
@@ -495,10 +497,10 @@ class SettingsGUI:
             for text_to_write in to_write:
                 f.write(text_to_write + '\n')
 
-        print("Valorant Sensitivity:", val_sensitivity)
-        print("Minimum inactive time for mouse to be on top:", min_inactive_time)
-        print("Allowed time to move mouse to ping:", allowed_ping_time)
-        print("Selected Ability:", selected_ability_str)
+        # print("Valorant Sensitivity:", val_sensitivity)
+        # print("Minimum inactive time for mouse to be on top:", min_inactive_time)
+        # print("Allowed time to move mouse to ping:", allowed_ping_time)
+        # print("Selected Ability:", selected_ability_str)
         self.root.destroy()
         create_main_menu()
 
@@ -507,4 +509,5 @@ class SettingsGUI:
         Start the settings GUI.
         """
         self.root.mainloop()
+
 

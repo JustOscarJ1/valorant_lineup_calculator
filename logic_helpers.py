@@ -111,7 +111,7 @@ class Parabola:
                 best_prediction = abs(prediction - distance)
                 best_angle = i
 
-        print(best_angle)
+        #print(best_angle)
         return best_angle / settings.sens_adjustment
 
 class Ability:
@@ -171,6 +171,9 @@ def shoot_projectile(settings):
 
     while not desired_distance:
         desired_distance = guihelpers.get_distance()
+
+    if desired_distance == 'cancelled':
+        return
 
     angle = settings.hero_ability.parabola.calculate_angle(desired_distance, settings)
 
