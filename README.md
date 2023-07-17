@@ -38,11 +38,11 @@ Valorant Lineup Tool is a Python-based application that assists players in shoot
    - **Send Projectile**: Triggers the projectile shooting process. Users will be prompted to enter the desired distance, move the mouse to ping, and position the mouse accurately for the shot.
 
 3. Shooting Process:
-    1. Enter the distance to the goal location in meters. Find this using an in-game ping.
-    2. Place your mouse directly on the ping.
-    3. Move your mouse to the top of the screen, then stop moving your mouse. Be careful not to sway too much doing this or move to the left or right when at the top of the screen, as it will cause issues.
-    4. Move your mouse as directed, trying to get the X and Y as close to 0 as possible.
-    5. Shoot the projectile.
+    - Enter the distance to the goal location in meters. Find this using an in-game ping.
+    - Place your mouse directly on the ping.
+    - Move your mouse to the top of the screen, then stop moving your mouse. Be careful not to sway too much doing this or move to the left or right when at the top of the screen, as it will cause issues.
+    - Move your mouse as directed, trying to get the X and Y as close to 0 as possible.
+    - Shoot the projectile.
 
 ## Customization
 
