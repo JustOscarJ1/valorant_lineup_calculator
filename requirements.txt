@@ -1,5 +1,5 @@
 pyautogui
 tkinter
-customtkinter
+customtkinter==5.2
 pillow
 pyttsx3
