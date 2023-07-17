@@ -1,3 +1,5 @@
+<a href="buymeacoffee.com/flamingjark" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
 WARNING: This will (probably) only work on 1920x1080 monitors, if someone with a larger monitor tests, this can probably be fixed pretty easily.
 # Valorant Lineup Tool
 
@@ -79,6 +81,5 @@ For any inquiries or feedback, please contact JustOscarJs:
 - Discord: JustOscarJ
 - GitHub: JustOscarJ1
 - Reddit: FlamingJark
-- BuyMeACoffee (dono): buymeacoffee.com/flamingjark
 
 Feel free to reach out with any questions or suggestions related to the project.
