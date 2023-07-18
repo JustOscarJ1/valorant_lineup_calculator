@@ -62,6 +62,7 @@ Valorant Lineup Tool is a Python-based application that assists players in shoot
 To change settings press the "set settings" button in the main menu, then select the desired settings and press "save". These will be saved for future launches in `settings.txt`. You can also change settings directly in the `settings.txt` file.
 
 ####Ability
+
 You can change the ability you want the program to calculate for, to do this press the image of the desired ability in the settings menu. The text will appear bold to show the selection.
 #### Valorant sensitivity
 For the calculations to work properly, you need to input your Valorant sensitivity, do not enter DPI, EDPI or anything else, just the in-game sensitivity.
