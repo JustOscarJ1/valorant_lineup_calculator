@@ -446,7 +446,7 @@ class SettingsGUI:
         label_sensitivity = customtkinter.CTkLabel(self.frame, text="Valorant Sensitivity")
         label_sensitivity.grid(row=len(self.button_frames) + 1, column=0, padx=5, pady=5)
 
-        self.input_sensitivity = customtkinter.CTkEntry(self.frame)
+        self.input_sensitivity = customtkinter.CTkEntry(self.frame, placeholder_text='Valorant sens separated by , or .', width=205, justify='center')
         self.input_sensitivity.grid(row=len(self.button_frames) + 2, column=0, padx=5, pady=5)
 
     def create_inactive_time_slider(self):
@@ -531,7 +531,9 @@ class SettingsGUI:
         """
         Save the selected values to a settings file.
         """
-        val_sensitivity = self.input_sensitivity.get()
+        if ',' in self.input_sensitivity.get():
+            val_sensitivity = self.input_sensitivity.get().replace(',', '.')
+        else: val_sensitivity = self.input_sensitivity.get()
         min_inactive_time = round(self.scale_inactive_time.get(), 1)
         allowed_ping_time = round(self.scale_ping_time.get(), 1)
         selected_ability_str = self.selected_ability.get()
@@ -568,5 +570,3 @@ class SettingsGUI:
         Handle mouse wheel scrolling.
         """
         self.canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
-
-
