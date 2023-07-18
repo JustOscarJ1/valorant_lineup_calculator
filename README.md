@@ -1,3 +1,4 @@
+
 <a href="https://www.buymeacoffee.com/flamingjark" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
 **Support and updates Discord: https://discord.gg/83WdsEnXac**
@@ -21,9 +22,14 @@ Valorant Lineup Tool is a Python-based application that assists players in shoot
 - **Settings Management**: The tool includes a settings manager that allows users to customize sensitivity, minimum inactive time for the mouse to be on top, and the allowed time to move the mouse to ping. Users can save and load settings for their preferences.
 
 ## Getting Started
+### Basic Installation (reccomended)
+- Navigate to https://github.com/JustOscarJ1/valorant_lineup_calculator/releases and download the latest release.
+- Unzip the file in any location
+- Run the provided "Valorant Lineups.exe"
+---
 
-### Prerequisites
-
+### Python Installation (not recommended)
+ ### Prerequisites 
 - Python 3.x
 - Libraries: `keyboard`, `pyautogui`, `pyttsx3`, `tkinter`, `customtkinter`, `PIL`
 
