@@ -364,14 +364,15 @@ class SettingsGUI:
 
         self.root = customtkinter.CTk()
         self.root.title("Valorant Abilities")
-        self.root.resizable(False, False)
+        self.root.geometry("325x880+0+0")
+        self.root.resizable(False, True)
         self.root.attributes("-topmost", True)
-        self.root.geometry("+0+0")
         customtkinter.set_appearance_mode('light')
 
         self.selected_ability = tk.StringVar()
         self.beep_or_tts = tk.StringVar(value="beep")
 
+        self.create_scrollable_frame()
         self.create_buttons()
         self.create_separator()
         self.create_sensitivity_input()
@@ -380,6 +381,27 @@ class SettingsGUI:
         self.create_beep_tts_buttons()
         self.create_save_button()
 
+    def create_scrollable_frame(self):
+        """
+        Create a scrollable frame using a canvas and scrollbar.
+        """
+        canvas_width = 300  # Fixed width for the canvas
+        frame_width = canvas_width - 20  # Adjusted width for the frame
+
+        self.canvas = tk.Canvas(self.root, width=canvas_width)
+        self.canvas.pack(side="left", fill="y")
+
+        scrollbar = customtkinter.CTkScrollbar(self.root, orientation="vertical", command=self.canvas.yview)
+        scrollbar.pack(side="right", fill="y")
+
+        self.canvas.configure(yscrollcommand=scrollbar.set)
+        self.canvas.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
+
+        self.frame = tk.Frame(self.canvas, width=frame_width)
+        self.canvas.create_window((0, 0), window=self.frame, anchor="nw")
+
+        self.frame.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
+        self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)
 
     def create_buttons(self):
         """
@@ -391,12 +413,15 @@ class SettingsGUI:
         for i, (button_name, image_filename) in enumerate(self.button_images.items()):
             image_path = f"images/{image_filename}"
 
-            ctkimage_photo = customtkinter.CTkImage(dark_image=Image.open(image_path),size=image_size)
+            ctkimage_photo = customtkinter.CTkImage(dark_image=Image.open(image_path), size=image_size)
 
-            button_frame = customtkinter.CTkFrame(self.root, fg_color='#ebebeb')
+            button_frame = customtkinter.CTkFrame(self.frame, fg_color='#ebebeb')
             button_frame.grid(row=i, column=0, sticky="w", pady=5)
 
-            image_button = customtkinter.CTkButton(master=button_frame, image=ctkimage_photo, text="", width=image_size[0], height=image_size[1], fg_color='#dbdbdb', hover_color='#c7c5c5')
+            image_button = customtkinter.CTkButton(
+                master=button_frame, image=ctkimage_photo, text="", width=image_size[0], height=image_size[1],
+                fg_color='#dbdbdb', hover_color='#c7c5c5'
+            )
             image_button.grid(row=0, column=0, padx=5)
 
             text_label = customtkinter.CTkLabel(button_frame, text=button_name)
@@ -411,31 +436,31 @@ class SettingsGUI:
         """
         Create a separator between buttons and other settings.
         """
-        separator_frame = customtkinter.CTkFrame(self.root, height=2)
+        separator_frame = customtkinter.CTkFrame(self.frame, height=2)
         separator_frame.grid(row=len(self.button_frames), column=0, padx=5, pady=10, sticky="we")
 
     def create_sensitivity_input(self):
         """
         Create an input for Valorant sensitivity.
         """
-        label_sensitivity = customtkinter.CTkLabel(self.root, text="Valorant Sensitivity")
+        label_sensitivity = customtkinter.CTkLabel(self.frame, text="Valorant Sensitivity")
         label_sensitivity.grid(row=len(self.button_frames) + 1, column=0, padx=5, pady=5)
 
-        self.input_sensitivity = customtkinter.CTkEntry(self.root)
+        self.input_sensitivity = customtkinter.CTkEntry(self.frame)
         self.input_sensitivity.grid(row=len(self.button_frames) + 2, column=0, padx=5, pady=5)
 
     def create_inactive_time_slider(self):
         """
         Create a slider for minimum inactive time for the mouse to be on top.
         """
-        label_inactive_time = customtkinter.CTkLabel(self.root, text="Minimum inactive time for mouse to be on top")
+        label_inactive_time = customtkinter.CTkLabel(self.frame, text="Minimum inactive time for mouse to be on top")
         label_inactive_time.grid(row=len(self.button_frames) + 3, column=0, padx=5, pady=5)
 
-        self.scale_inactive_time = customtkinter.CTkSlider(self.root, from_=1, to=10, orientation="horizontal")
+        self.scale_inactive_time = customtkinter.CTkSlider(self.frame, from_=1, to=10, orientation="horizontal")
         self.scale_inactive_time.grid(row=len(self.button_frames) + 4, column=0, padx=5)
 
         # Add label to display slider value
-        self.label_inactive_time_value = customtkinter.CTkLabel(self.root, text="5")
+        self.label_inactive_time_value = customtkinter.CTkLabel(self.frame, text="5")
         self.label_inactive_time_value.grid(row=len(self.button_frames) + 4, column=0, sticky="e", padx=(10, 5))
 
         # Bind slider value to label
@@ -446,14 +471,14 @@ class SettingsGUI:
         """
         Create a slider for the allowed time to move the mouse to ping.
         """
-        label_ping_time = customtkinter.CTkLabel(self.root, text="Allowed time to move mouse to ping")
+        label_ping_time = customtkinter.CTkLabel(self.frame, text="Allowed time to move mouse to ping")
         label_ping_time.grid(row=len(self.button_frames) + 5, column=0, padx=5, pady=5)
 
-        self.scale_ping_time = customtkinter.CTkSlider(self.root, from_=1, to=10, orientation="horizontal")
+        self.scale_ping_time = customtkinter.CTkSlider(self.frame, from_=1, to=10, orientation="horizontal")
         self.scale_ping_time.grid(row=len(self.button_frames) + 6, column=0, padx=5)
 
         # Add label to display slider value
-        self.label_ping_time_value = customtkinter.CTkLabel(self.root, text="5")
+        self.label_ping_time_value = customtkinter.CTkLabel(self.frame, text="5")
         self.label_ping_time_value.grid(row=len(self.button_frames) + 6, column=0, sticky="e", padx=(10, 5))
 
         # Bind slider value to label
@@ -464,10 +489,10 @@ class SettingsGUI:
         """
         Create buttons for selecting Beep or TTS.
         """
-        label_beep_tts = customtkinter.CTkLabel(self.root, text="Beep or TTS")
+        label_beep_tts = customtkinter.CTkLabel(self.frame, text="Beep or TTS")
         label_beep_tts.grid(row=len(self.button_frames) + 7, column=0, padx=5, pady=5)
 
-        button_frame = customtkinter.CTkFrame(self.root, fg_color='#ebebeb')
+        button_frame = customtkinter.CTkFrame(self.frame, fg_color='#f0f0f0')
         button_frame.grid(row=len(self.button_frames) + 8, column=0, pady=5)
 
         button_beep = customtkinter.CTkRadioButton(button_frame, text="Beep", variable=self.beep_or_tts, value="beep")
@@ -480,7 +505,7 @@ class SettingsGUI:
         """
         Create a save button to save the settings.
         """
-        self.save_button = customtkinter.CTkButton(self.root, text="Save", command=self.save_values, state="disabled")
+        self.save_button = customtkinter.CTkButton(self.frame, text="Save", command=self.save_values, state="disabled")
         self.save_button.grid(row=len(self.button_frames) + 9, column=0, pady=10)
 
     def image_click(self, button_name):
@@ -537,3 +562,11 @@ class SettingsGUI:
 
     def start(self):
         self.root.mainloop()
+
+    def _on_mousewheel(self, event):
+        """
+        Handle mouse wheel scrolling.
+        """
+        self.canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+
