@@ -446,7 +446,7 @@ class SettingsGUI:
         label_sensitivity = customtkinter.CTkLabel(self.frame, text="Valorant Sensitivity")
         label_sensitivity.grid(row=len(self.button_frames) + 1, column=0, padx=5, pady=5)
 
-        self.input_sensitivity = customtkinter.CTkEntry(self.frame, placeholder_text='Valorant sens separated by , or .', width=205, justify='center')
+        self.input_sensitivity = customtkinter.CTkEntry(self.frame,width=205, justify='center')
         self.input_sensitivity.grid(row=len(self.button_frames) + 2, column=0, padx=5, pady=5)
 
     def create_inactive_time_slider(self):
