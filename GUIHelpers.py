@@ -1,9 +1,9 @@
 import tkinter as tk
-from tkinter import simpledialog
 import keyboard
 import pyautogui
 import customtkinter
-from PIL import ImageTk, Image
+from PIL import Image
+import webbrowser
 from logic_helpers import create_main_menu, shoot_projectile, play_instruction_noise
 
 # DistanceInputGUI class for inputting distance
@@ -79,19 +79,6 @@ class SettingsViewer:
             settings_manager (SettingsManager): The settings manager object containing the settings to be displayed.
         """
         self.settings_manager = settings_manager
-        self.root = None
-        self.frame = None
-        self.ability_label = None
-        self.ability_placeholder = None
-        self.sensitivity_label = None
-        self.sensitivity_placeholder = None
-        self.inactive_time_label = None
-        self.inactive_time_placeholder = None
-        self.ping_time_label = None
-        self.ping_time_placeholder = None
-        self.beep_or_tts_label = None
-        self.beep_or_tts_placeholder = None
-        self.close_button = None
 
     def close_window(self):
         """
@@ -105,7 +92,7 @@ class SettingsViewer:
         """
         Sets up the GUI by creating the main window, labels, and buttons.
         """
-        customtkinter.set_appearance_mode("System")
+        customtkinter.set_appearance_mode("dark")
         customtkinter.set_default_color_theme("blue")
 
         # Create the main window and frame
@@ -145,8 +132,8 @@ class SettingsViewer:
         self.ping_time_placeholder = customtkinter.CTkLabel(self.frame, text=str(self.settings_manager.allowed_time_to_move_mouse_to_ping))
         self.ping_time_placeholder.grid(row=3, column=1, padx=10, pady=10)
 
-        self.ping_time_label = customtkinter.CTkLabel(self.frame, text="Beep or TTS:")
-        self.ping_time_label.grid(row=4, column=0, padx=10, pady=10)
+        self.beep_or_tts_label = customtkinter.CTkLabel(self.frame, text="Beep or TTS:")
+        self.beep_or_tts_label.grid(row=4, column=0, padx=10, pady=10)
 
         self.beep_or_tts_placeholder = customtkinter.CTkLabel(self.frame, text=str(self.settings_manager.beep_or_tts))
         self.beep_or_tts_placeholder.grid(row=4, column=1, padx=10, pady=10)
@@ -274,6 +261,7 @@ class MainMenu:
         self.root = customtkinter.CTk()
         self.root.geometry("400x240")
         self.root.title("JustOscarJs Lineup Tool")
+        self.root.attributes('-topmost', True)
 
         # Use CTkButton from CustomTkinter for customized buttons
         self.current_settings_button = customtkinter.CTkButton(master=self.root, text="Current Settings",
@@ -295,8 +283,12 @@ class MainMenu:
         credits_text = "Credits:\nDiscord: JustOscarJ\nGitHub: JustOscarJ1\nReddit: FlamingJark"
         self.credits_label = customtkinter.CTkLabel(master=self.root, text=credits_text, corner_radius=4)
         self.credits_label.place(relx=0.5, rely=0.85, anchor=customtkinter.CENTER)
-        self.hot_key_active = True
 
+        self.support_label = customtkinter.CTkLabel(master=self.root, text="Support Discord", corner_radius=4, text_color="blue", cursor="hand2", font=('Helveticabold', 15))
+        self.support_label.place(relx=0.5, rely=0.05, anchor=customtkinter.CENTER)
+        self.support_label.bind("<Button-1>", lambda e: webbrowser.open_new_tab("https://discord.gg/nkNx5SPWtc"))
+
+        self.hot_key_active = True
         keyboard.on_press_key("F5", self.on_hotkey_pressed)
 
     def on_hotkey_pressed(self, event):
@@ -370,12 +362,16 @@ class SettingsGUI:
             "Kayo Fragment": "kayo_fragment.png"
         }
 
-        self.root = tk.Tk()
+        self.root = customtkinter.CTk()
         self.root.title("Valorant Abilities")
-        self.root.overrideredirect(True)
         self.root.resizable(False, False)
+        self.root.attributes("-topmost", True)
+        self.root.geometry("+0+0")
+        customtkinter.set_appearance_mode('light')
+
         self.selected_ability = tk.StringVar()
         self.beep_or_tts = tk.StringVar(value="beep")
+
         self.create_buttons()
         self.create_separator()
         self.create_sensitivity_input()
@@ -384,41 +380,30 @@ class SettingsGUI:
         self.create_beep_tts_buttons()
         self.create_save_button()
 
+
     def create_buttons(self):
         """
         Create buttons for each ability with images.
         """
-        image_size = (50, 50)
+        image_size = (40, 40)
         self.button_frames = []
 
         for i, (button_name, image_filename) in enumerate(self.button_images.items()):
             image_path = f"images/{image_filename}"
-            img = Image.open(image_path)
-            img.thumbnail(image_size, Image.LANCZOS)
 
-            width, height = img.size
-            if width > height:
-                left = (width - height) // 2
-                right = left + height
-                img = img.crop((left, 0, right, height))
-            else:
-                top = (height - width) // 2
-                bottom = top + width
-                img = img.crop((0, top, width, bottom))
+            ctkimage_photo = customtkinter.CTkImage(dark_image=Image.open(image_path),size=image_size)
 
-            photo = ImageTk.PhotoImage(img)
-
-            button_frame = tk.Frame(self.root)
+            button_frame = customtkinter.CTkFrame(self.root, fg_color='#ebebeb')
             button_frame.grid(row=i, column=0, sticky="w", pady=5)
 
-            image_label = tk.Label(button_frame, image=photo)
-            image_label.grid(row=0, column=0, padx=5)
+            image_button = customtkinter.CTkButton(master=button_frame, image=ctkimage_photo, text="", width=image_size[0], height=image_size[1], fg_color='#dbdbdb', hover_color='#c7c5c5')
+            image_button.grid(row=0, column=0, padx=5)
 
-            text_label = tk.Label(button_frame, text=button_name)
+            text_label = customtkinter.CTkLabel(button_frame, text=button_name)
             text_label.grid(row=0, column=1, padx=5)
 
-            image_label.bind("<Button-1>", lambda event, name=button_name: self.image_click(name))
-            image_label.image = photo
+            image_button.bind("<Button-1>", lambda event, name=button_name: self.image_click(name))
+            image_button.image = ctkimage_photo
 
             self.button_frames.append(button_frame)
 
@@ -426,60 +411,76 @@ class SettingsGUI:
         """
         Create a separator between buttons and other settings.
         """
-        separator_frame = tk.Frame(self.root, height=2, relief="sunken")
+        separator_frame = customtkinter.CTkFrame(self.root, height=2)
         separator_frame.grid(row=len(self.button_frames), column=0, padx=5, pady=10, sticky="we")
 
     def create_sensitivity_input(self):
         """
         Create an input for Valorant sensitivity.
         """
-        label_sensitivity = tk.Label(self.root, text="Valorant Sensitivity")
-        label_sensitivity.grid(row=len(self.button_frames) + 1, column=0, padx=5, pady=5, sticky="w")
+        label_sensitivity = customtkinter.CTkLabel(self.root, text="Valorant Sensitivity")
+        label_sensitivity.grid(row=len(self.button_frames) + 1, column=0, padx=5, pady=5)
 
-        self.input_sensitivity = tk.Entry(self.root)
-        self.input_sensitivity.grid(row=len(self.button_frames) + 2, column=0, padx=5, pady=5, sticky="w")
+        self.input_sensitivity = customtkinter.CTkEntry(self.root)
+        self.input_sensitivity.grid(row=len(self.button_frames) + 2, column=0, padx=5, pady=5)
 
     def create_inactive_time_slider(self):
         """
         Create a slider for minimum inactive time for the mouse to be on top.
         """
-        label_inactive_time = tk.Label(self.root, text="Minimum inactive time for mouse to be on top")
-        label_inactive_time.grid(row=len(self.button_frames) + 3, column=0, padx=5, pady=5, sticky="w")
+        label_inactive_time = customtkinter.CTkLabel(self.root, text="Minimum inactive time for mouse to be on top")
+        label_inactive_time.grid(row=len(self.button_frames) + 3, column=0, padx=5, pady=5)
 
-        self.scale_inactive_time = tk.Scale(self.root, from_=1, to=10, orient="horizontal", resolution=0.1)
-        self.scale_inactive_time.grid(row=len(self.button_frames) + 4, column=0, padx=5, pady=5, sticky="w")
+        self.scale_inactive_time = customtkinter.CTkSlider(self.root, from_=1, to=10, orientation="horizontal")
+        self.scale_inactive_time.grid(row=len(self.button_frames) + 4, column=0, padx=5)
+
+        # Add label to display slider value
+        self.label_inactive_time_value = customtkinter.CTkLabel(self.root, text="5")
+        self.label_inactive_time_value.grid(row=len(self.button_frames) + 4, column=0, sticky="e", padx=(10, 5))
+
+        # Bind slider value to label
+        self.scale_inactive_time.bind("<B1-Motion>", lambda event: self.label_inactive_time_value.configure(
+            text=round(self.scale_inactive_time.get(), 1)))
 
     def create_ping_time_slider(self):
         """
         Create a slider for the allowed time to move the mouse to ping.
         """
-        label_ping_time = tk.Label(self.root, text="Allowed time to move mouse to ping")
-        label_ping_time.grid(row=len(self.button_frames) + 5, column=0, padx=5, pady=5, sticky="w")
+        label_ping_time = customtkinter.CTkLabel(self.root, text="Allowed time to move mouse to ping")
+        label_ping_time.grid(row=len(self.button_frames) + 5, column=0, padx=5, pady=5)
 
-        self.scale_ping_time = tk.Scale(self.root, from_=1, to=10, orient="horizontal", resolution=0.1)
-        self.scale_ping_time.grid(row=len(self.button_frames) + 6, column=0, padx=5, pady=5, sticky="w")
+        self.scale_ping_time = customtkinter.CTkSlider(self.root, from_=1, to=10, orientation="horizontal")
+        self.scale_ping_time.grid(row=len(self.button_frames) + 6, column=0, padx=5)
+
+        # Add label to display slider value
+        self.label_ping_time_value = customtkinter.CTkLabel(self.root, text="5")
+        self.label_ping_time_value.grid(row=len(self.button_frames) + 6, column=0, sticky="e", padx=(10, 5))
+
+        # Bind slider value to label
+        self.scale_ping_time.bind("<B1-Motion>", lambda event: self.label_ping_time_value.configure(
+            text=round(self.scale_ping_time.get(), 1)))
 
     def create_beep_tts_buttons(self):
         """
         Create buttons for selecting Beep or TTS.
         """
-        label_beep_tts = tk.Label(self.root, text="Beep or TTS")
-        label_beep_tts.grid(row=len(self.button_frames) + 7, column=0, padx=5, pady=5, sticky="w")
+        label_beep_tts = customtkinter.CTkLabel(self.root, text="Beep or TTS")
+        label_beep_tts.grid(row=len(self.button_frames) + 7, column=0, padx=5, pady=5)
 
-        button_frame = tk.Frame(self.root)
-        button_frame.grid(row=len(self.button_frames) + 8, column=0, sticky="w", pady=5)
+        button_frame = customtkinter.CTkFrame(self.root, fg_color='#ebebeb')
+        button_frame.grid(row=len(self.button_frames) + 8, column=0, pady=5)
 
-        button_beep = tk.Radiobutton(button_frame, text="Beep", variable=self.beep_or_tts, value="beep")
-        button_beep.grid(row=0, column=0, padx=5)
+        button_beep = customtkinter.CTkRadioButton(button_frame, text="Beep", variable=self.beep_or_tts, value="beep")
+        button_beep.grid(row=0, column=0, padx=35)
 
-        button_tts = tk.Radiobutton(button_frame, text="TTS", variable=self.beep_or_tts, value="tts")
-        button_tts.grid(row=0, column=1, padx=5)
+        button_tts = customtkinter.CTkRadioButton(button_frame, text="TTS", variable=self.beep_or_tts, value="tts")
+        button_tts.grid(row=0, column=1, padx=15)
 
     def create_save_button(self):
         """
         Create a save button to save the settings.
         """
-        self.save_button = tk.Button(self.root, text="Save", command=self.save_values, state="disabled")
+        self.save_button = customtkinter.CTkButton(self.root, text="Save", command=self.save_values, state="disabled")
         self.save_button.grid(row=len(self.button_frames) + 9, column=0, pady=10)
 
     def image_click(self, button_name):
@@ -490,23 +491,24 @@ class SettingsGUI:
         """
         for button_frame in self.button_frames:
             label = button_frame.winfo_children()[1]
-            label.config(font=("TkDefaultFont", 11))
+            label.configure(font=("TkDefaultFont", 12))
 
         for button_frame in self.button_frames:
             label = button_frame.winfo_children()[1]
-            if label['text'] == button_name:
-                label.config(font=("TkDefaultFont", 11, "bold"))
+
+            if label.cget('text') == button_name:
+                label.configure(font=("TkDefaultFont", 12, "bold"))
 
         self.selected_ability.set(button_name)
-        self.save_button.config(state="normal")
+        self.save_button.configure(state="normal")
 
     def save_values(self):
         """
         Save the selected values to a settings file.
         """
         val_sensitivity = self.input_sensitivity.get()
-        min_inactive_time = self.scale_inactive_time.get()
-        allowed_ping_time = self.scale_ping_time.get()
+        min_inactive_time = round(self.scale_inactive_time.get(), 1)
+        allowed_ping_time = round(self.scale_ping_time.get(), 1)
         selected_ability_str = self.selected_ability.get()
         beep_or_tts_str = self.beep_or_tts.get()
 
@@ -530,11 +532,6 @@ class SettingsGUI:
             for text_to_write in to_write:
                 f.write(text_to_write + '\n')
 
-        # print("Valorant Sensitivity:", val_sensitivity)
-        # print("Minimum inactive time for mouse to be on top:", min_inactive_time)
-        # print("Allowed time to move mouse to ping:", allowed_ping_time)
-        # print("Selected Ability:", selected_ability_str)
-        # print("Beep or TTS:", beep_or_tts_str)
         self.root.destroy()
         create_main_menu()
 

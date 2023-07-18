@@ -5,6 +5,7 @@ import GUIHelpers as guihelpers
 import pyautogui
 import winsound
 
+
 def play_instruction_noise(beep_or_tts, text = None):
     """
     Function to convert text to speech using pyttsx3 library or play a beep.
@@ -106,7 +107,6 @@ class Parabola:
         self.update_variables(distance)
         if distance > self.max_distance:
             play_instruction_noise('tts', f"Maximum distance is {self.max_distance}")
-            exit()
 
         if self.m == self.k:
             return self.m
