@@ -2,7 +2,7 @@
 <a href="https://www.buymeacoffee.com/flamingjark" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
 **Support and updates Discord: https://discord.gg/83WdsEnXac**
-
+**Due to too many support requests and unknowing users the source code is temporarily hidden, PLEASE use the EXE if you want to try the program**
 
 # Valorant Lineup Tool
 
@@ -28,7 +28,7 @@ Valorant Lineup Tool is a Python-based application that assists players in shoot
 - Run the provided "Valorant Lineups.exe"
 ---
 
-### Python Installation (not recommended)
+### Python Installation (not recommended, source code currently removed)
  ### Prerequisites 
 - Python 3.x
 - Libraries: `keyboard`, `pyautogui`, `pyttsx3`, `tkinter`, `customtkinter`, `PIL`
