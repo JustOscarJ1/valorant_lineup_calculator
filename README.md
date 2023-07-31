@@ -84,7 +84,7 @@ This program does not intercept, emulate or redirect any communication to any Ri
 
 ## Contributing
 
-Contributions to the tool are welcome! If you encounter any issues or have suggestions for improvements, please create an issue or submit a pull request.
+Contributions to the code are currently closed, however if you have any ideas, issues or suggestions please open an issue.
 
 ## License
 
